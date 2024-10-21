@@ -8,37 +8,29 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        String Base_URL1 = "https://catfact.ninja/fact";
-        try {
-            URL url = new URL(Base_URL1);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Выберите с какого на какой язык показать перевод");
+            System.out.println("1 - Английский-русский");
+            System.out.println("2 - Русский-английский");
+            System.out.println("0 - Выход");
+            int command = scanner.nextInt();
+            String message = scanner.toString();
+            switch (command) {
+                case 1:
+                    String messageAR = translateText(message);
+                    System.out.println(messageAR);
+                case 2:
+                    String messageRA = translateText1(message);
+                    System.out.println(messageRA);
             }
-            in.close();
-            conn.disconnect();
 
-            JSONObject jsonResponse = new JSONObject(response.toString());
-
-            String fact = jsonResponse.getString("fact");
-            System.out.println(fact);
-            String fact1 = translateText(fact);
-            System.out.println(fact1);
-            String fact2 = translateText1(fact1);
-            System.out.println(fact2);
-
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
         }
     }
 
